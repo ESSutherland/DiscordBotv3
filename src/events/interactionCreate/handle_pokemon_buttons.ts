@@ -7,7 +7,7 @@ import {
 } from "discord.js";
 import { pokemonMessageData } from "../../util/data";
 
-const handleButtons = async (client: Client, interaction: Interaction) => {
+export default async (client: Client, interaction: Interaction) => {
   if (!interaction.isButton()) return;
 
   const pokemonData = pokemonMessageData.find(
@@ -70,5 +70,3 @@ const handleButtons = async (client: Client, interaction: Interaction) => {
     ],
   });
 };
-
-export default handleButtons;

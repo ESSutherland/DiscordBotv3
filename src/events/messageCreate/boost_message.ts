@@ -1,6 +1,6 @@
 import { ActivityType, Client, Message, MessageType } from "discord.js";
 
-const boostMessage = async (client: Client, message: Message) => {
+export default async (client: Client, message: Message) => {
   if (message.author.bot) return;
 
   console.log(message.content);
@@ -26,5 +26,3 @@ const boostMessage = async (client: Client, message: Message) => {
     `🎉 **Thank you ${message.author.toString()} for boosting the server!** 🎉`
   );
 };
-
-export default boostMessage;

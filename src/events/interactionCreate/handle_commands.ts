@@ -2,7 +2,7 @@ import { Client, Interaction } from "discord.js";
 import { devs, test_server } from "../../../config.json";
 import { getLocalCommands } from "../../util/get_local_commands";
 
-const handleCommands = async (client: Client, interaction: Interaction) => {
+export default async (client: Client, interaction: Interaction) => {
   if (!interaction.isChatInputCommand()) return;
 
   const localCommands = await getLocalCommands();
@@ -81,5 +81,3 @@ const handleCommands = async (client: Client, interaction: Interaction) => {
     console.error(error);
   }
 };
-
-export default handleCommands;

@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { Client, IntentsBitField, Partials } from "discord.js";
 import { eventHandler } from "./handlers/event_handler";
+import mongoose from "mongoose";
 
 const client = new Client({
   intents: [
@@ -12,6 +13,14 @@ const client = new Client({
   ],
 });
 
-eventHandler(client);
+(async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI!, {});
 
-client.login(process.env.BOT_TOKEN);
+    console.log("Connected to MongoDB");
+    eventHandler(client);
+    client.login(process.env.BOT_TOKEN);
+  } catch (error) {
+    console.error(error);
+  }
+})();

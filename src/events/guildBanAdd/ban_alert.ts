@@ -1,6 +1,6 @@
 import { AuditLogEvent, Client, EmbedBuilder, GuildBan } from "discord.js";
 
-const banAlert = async (client: Client, ban: GuildBan) => {
+export default async (client: Client, ban: GuildBan) => {
   const channelId = "712439399274774588";
 
   const modChannel = ban.guild.channels.cache.get(channelId);
@@ -33,5 +33,3 @@ const banAlert = async (client: Client, ban: GuildBan) => {
 
   modChannel.send({ embeds: [banEmbed] });
 };
-
-export default banAlert;

@@ -1,6 +1,6 @@
 import { Client, GuildMember } from "discord.js";
 import { devs } from "../../../config.json";
-const updateRoles = async (client: Client, member: GuildMember) => {
+export default async (client: Client, member: GuildMember) => {
   if (member.user.bot) return;
 
   if (member.premiumSince) {
@@ -13,5 +13,3 @@ const updateRoles = async (client: Client, member: GuildMember) => {
     role.delete();
   }
 };
-
-export default updateRoles;

@@ -1,6 +1,6 @@
 import { Client, User } from "discord.js";
 import { devs } from "../../../config.json";
-const updateRoles = async (client: Client, oldUser: User, newUser: User) => {
+export default async (client: Client, oldUser: User, newUser: User) => {
   if (oldUser.bot) return;
 
   const guild = client.guilds.cache.first();
@@ -26,5 +26,3 @@ const updateRoles = async (client: Client, oldUser: User, newUser: User) => {
     );
   }
 };
-
-export default updateRoles;

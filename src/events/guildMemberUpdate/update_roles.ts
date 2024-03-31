@@ -1,6 +1,6 @@
 import { Client, GuildMember, User } from "discord.js";
 
-const updateRoles = async (
+export default async (
   client: Client,
   oldMember: GuildMember,
   newMember: GuildMember
@@ -37,5 +37,3 @@ const updateRoles = async (
     role.delete();
   }
 };
-
-export default updateRoles;

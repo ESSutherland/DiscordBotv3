@@ -1,6 +1,6 @@
 import { Client, GuildMember } from "discord.js";
 import { devs } from "../../../config.json";
-const updateRoles = async (client: Client, member: GuildMember) => {
+export default async (client: Client, member: GuildMember) => {
   const message = `👋 User ${member.user.username} left the server. ${
     member.pending ? "(Member was pending)" : ""
   }`;
@@ -12,5 +12,3 @@ const updateRoles = async (client: Client, member: GuildMember) => {
   console.log(message);
   channel.send(message);
 };
-
-export default updateRoles;

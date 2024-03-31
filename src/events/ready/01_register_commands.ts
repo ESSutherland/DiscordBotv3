@@ -4,7 +4,7 @@ import { getLocalCommands } from "../../util/get_local_commands";
 import { getApplicationCommands } from "../../util/get_application_commands";
 import { areCommandsDifferent } from "../../util/are_commands_different";
 
-const registerCommands = async (client: Client) => {
+export default async (client: Client) => {
   try {
     let localCommands = await getLocalCommands();
 
@@ -68,5 +68,3 @@ const registerCommands = async (client: Client) => {
     console.error(error);
   }
 };
-
-export default registerCommands;
