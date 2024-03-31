@@ -1,0 +1,27 @@
+{
+  "name": "discord-bot-v3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tutkli/jikan-ts": "^1.2.1",
+    "axios": "^1.6.8",
+    "axios-cache-interceptor": "^1.5.1",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.5",
+    "hex-to-rgba": "^2.0.1",
+    "pureimage": "^0.4.13"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "tsx": "^4.7.1"
+  }
+}
