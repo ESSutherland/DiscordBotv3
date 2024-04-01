@@ -9,9 +9,11 @@ export const successEmbed = (
   const embed = new EmbedBuilder()
     .setColor(interaction.guild?.members.me?.displayColor || "Green")
     .setTitle("Success!")
-    .setDescription(description)
-    .setFooter({
-      text: footer || "",
+    .setDescription(description);
+
+  if (footer)
+    embed.setFooter({
+      text: footer,
     });
 
   return embed;
