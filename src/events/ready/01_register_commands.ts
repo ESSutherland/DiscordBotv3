@@ -38,11 +38,9 @@ export default async (client: Client) => {
             description,
             options,
           });
-          console.log(`🔁 Edited command: ${name}`);
         }
       } else {
         if (command.deleted) {
-          console.log(`⏩ Skipping command: ${name}`);
           return;
         }
 

@@ -3,8 +3,6 @@ import { ActivityType, Client, Message, MessageType } from "discord.js";
 export default async (client: Client, message: Message) => {
   if (message.author.bot) return;
 
-  console.log(message.content);
-
   const boostTypes = [
     MessageType.GuildBoost,
     MessageType.GuildBoostTier1,
