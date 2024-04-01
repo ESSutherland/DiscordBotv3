@@ -1,20 +1,23 @@
 import {
+  ApplicationCommandOptionType,
   Client,
   CommandInteraction,
   EmbedBuilder,
-  SlashCommandBuilder,
 } from "discord.js";
 
 export default {
-  data: new SlashCommandBuilder()
-    .setName("whois")
-    .setDescription("Get information about a user")
-    .addUserOption((option) =>
-      option
-        .setName("user")
-        .setDescription("The user to get information about")
-        .setRequired(true)
-    ),
+  data: {
+    name: "whois",
+    description: "Get information about a user",
+    options: [
+      {
+        name: "user",
+        description: "The user to get information about",
+        type: ApplicationCommandOptionType.User,
+        required: false,
+      },
+    ],
+  },
 
   callback: async (client: Client, interaction: CommandInteraction) => {
     await interaction.deferReply();

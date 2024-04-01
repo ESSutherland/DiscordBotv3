@@ -1,11 +1,11 @@
 import {
+  ApplicationCommandOptionType,
   AttachmentBuilder,
   Client,
   CommandInteraction,
   EmbedBuilder,
   HexColorString,
   PermissionFlagsBits,
-  SlashCommandBuilder,
 } from "discord.js";
 
 import * as PImage from "pureimage";
@@ -16,34 +16,41 @@ import hexToRgba = require("hex-to-rgba");
 import { errorEmbed } from "../../util/embed_helper";
 
 export default {
-  data: new SlashCommandBuilder()
-    .setName("color")
-    .setNameLocalizations({
+  data: {
+    name: "color",
+    nameLocalizations: {
       "en-GB": "colour",
-    })
-    .setDescription("Create or edit a colored role.")
-    .setDescriptionLocalizations({
+    },
+    description: "Create or edit a colored role.",
+    descriptionLocalizations: {
       "en-GB": "Create or edit a coloured role.",
-    })
-    .addStringOption((option) =>
-      option
-        .setName("color")
-        .setNameLocalizations({ "en-GB": "colour" })
-        .setDescription("The HEX value of the color you want to use.")
-        .setDescriptionLocalizations({
+    },
+    options: [
+      {
+        name: "color",
+        nameLocalizations: {
+          "en-GB": "colour",
+        },
+        description: "The HEX value of the color you want to use.",
+        descriptionLocalizations: {
           "en-GB": "The HEX value of the colour you want to use.",
-        })
-        .setRequired(true)
-    ),
+        },
+        type: ApplicationCommandOptionType.String,
+        required: true,
+      },
+    ],
+  },
 
   botPermissions: [PermissionFlagsBits.ManageRoles],
 
   nitroOnly: true,
 
   callback: async (client: Client, interaction: CommandInteraction) => {
+    if (!interaction.isChatInputCommand() || !interaction.inGuild()) return;
+
     await interaction.deferReply();
 
-    const color = interaction.options.get("color")?.value as string;
+    const color = interaction.options.getString("color", true);
     const regex = "^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$";
 
     if (!color.match(regex)) {

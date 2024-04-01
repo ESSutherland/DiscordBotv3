@@ -1,21 +1,25 @@
 import { Font } from "canvacord";
 import {
+  ApplicationCommandOptionType,
   AttachmentBuilder,
   Client,
   CommandInteraction,
-  SlashCommandBuilder,
 } from "discord.js";
 import { UserCard } from "../../util/user_card";
 
 export default {
-  data: new SlashCommandBuilder()
-    .setName("user")
-    .setDescription("Check your or someone else's user card.")
-    .addUserOption((option) =>
-      option
-        .setName("target-user")
-        .setDescription("The user you want to check the card of.")
-    ),
+  data: {
+    name: "user",
+    description: "Check your or someone else's user card.",
+    options: [
+      {
+        name: "target-user",
+        description: "The user you want to check the card of.",
+        type: ApplicationCommandOptionType.User,
+        required: false,
+      },
+    ],
+  },
 
   callback: async (client: Client, interaction: CommandInteraction) => {
     if (!interaction.guild) return;

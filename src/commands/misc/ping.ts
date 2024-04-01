@@ -1,15 +1,10 @@
-import {
-  Client,
-  CommandInteraction,
-  EmbedBuilder,
-  SlashCommandBuilder,
-  User,
-} from "discord.js";
+import { Client, CommandInteraction, EmbedBuilder } from "discord.js";
 
 export default {
-  data: new SlashCommandBuilder()
-    .setName("ping")
-    .setDescription("Replies with the bot's latency."),
+  data: {
+    name: "ping",
+    description: "Replies with the bot's latency.",
+  },
 
   callback: async (client: Client, interaction: CommandInteraction) => {
     const embed = new EmbedBuilder();

@@ -1,34 +1,44 @@
 import {
+  ApplicationCommandOptionType,
   Client,
   CommandInteraction,
   PermissionFlagsBits,
-  SlashCommandBuilder,
 } from "discord.js";
 import { errorEmbed, successEmbed } from "../../util/embed_helper";
 
 export default {
-  data: new SlashCommandBuilder()
-    .setName("ban")
-    .setDescription("Ban a user.")
-    .addStringOption((option) =>
-      option
-        .setName("user-id")
-        .setDescription("The id of the user you want to ban.")
-        .setRequired(true)
-    )
-    .addStringOption((option) =>
-      option.setName("reason").setDescription("The reason for the ban.")
-    )
-    .addBooleanOption((option) =>
-      option
-        .setName("delete")
-        .setDescription("Delete user's messages from the past 7 days.")
-    ),
+  data: {
+    name: "ban",
+    description: "Ban a user.",
+    options: [
+      {
+        name: "user-id",
+        description: "The id of the user you want to ban.",
+        type: ApplicationCommandOptionType.String,
+        required: true,
+      },
+      {
+        name: "reason",
+        description: "The reason for the ban.",
+        type: ApplicationCommandOptionType.String,
+        required: false,
+      },
+      {
+        name: "delete",
+        description: "Delete user's messages from the past 7 days.",
+        type: ApplicationCommandOptionType.Boolean,
+        required: false,
+      },
+    ],
+  },
+
   permissionsRequired: [PermissionFlagsBits.BanMembers],
   botPermissions: [PermissionFlagsBits.BanMembers],
 
   callback: async (client: Client, interaction: CommandInteraction) => {
-    const userId = interaction.options.get("user-id")?.value as string;
+    if (!interaction.isChatInputCommand() || !interaction.inGuild()) return;
+
+    const userId = interaction.options.getString("user-id", true);
 
     if (!userId) {
       return interaction.reply({
@@ -39,9 +49,9 @@ export default {
     const user = await client.users.fetch(userId);
 
     const reason = `${interaction.user.username}:  ${
-      interaction.options.get("reason")?.value as string
+      interaction.options.getString("reason") || "No reason provided."
     }`;
-    const deleteMessages = interaction.options.get("delete")?.value as boolean;
+    const deleteMessages = interaction.options.getBoolean("delete") || false;
 
     if (!user) return;
 
@@ -54,7 +64,7 @@ export default {
       embeds: [
         successEmbed(
           interaction,
-          `Successfully banned user: ${"`" + user.tag + "`"}.`,
+          `Successfully banned user: \`${user.tag}\`.`,
           `ID: ${user.id}`,
           user
         ),

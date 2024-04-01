@@ -1,4 +1,4 @@
-import { EmbedBuilder } from "discord.js";
+import { ApplicationCommandOptionType, EmbedBuilder } from "discord.js";
 import {
   ActionRowBuilder,
   ButtonBuilder,
@@ -35,23 +35,27 @@ const blockedList = [
 ];
 
 export default {
-  data: new SlashCommandBuilder()
-    .setName("pokemon")
-    .setDescription("Get information about a pokemon")
-    .addStringOption((option) =>
-      option
-        .setName("pokemon")
-        .setDescription("name or number of the pokemon")
-        .setRequired(true)
-    ),
+  data: {
+    name: "pokemon",
+    description: "Get information about a pokemon",
+    options: [
+      {
+        name: "pokemon",
+        description: "name or number of the pokemon",
+        type: ApplicationCommandOptionType.String,
+        required: true,
+      },
+    ],
+  },
 
   callback: async (client: Client, interaction: CommandInteraction) => {
+    if (!interaction.isChatInputCommand()) return;
+
     await interaction.deferReply();
 
     const pokemonClient = new PokemonClient();
     const pokemonParam = interaction.options
-      .get("pokemon")
-      ?.value?.toString()
+      .getString("pokemon", true)
       .toLowerCase()
       .replace(" ", "-");
 

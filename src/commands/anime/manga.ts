@@ -1,26 +1,31 @@
 import { MangaClient, Manga } from "@tutkli/jikan-ts";
 import {
+  ApplicationCommandOptionType,
   Client,
   CommandInteraction,
   EmbedBuilder,
-  SlashCommandBuilder,
 } from "discord.js";
 
 export default {
-  data: new SlashCommandBuilder()
-    .setName("manga")
-    .setDescription("Get information about an manga")
-    .addStringOption((option) =>
-      option
-        .setName("params")
-        .setDescription("The parameters to search for")
-        .setRequired(true)
-    ),
+  data: {
+    name: "manga",
+    description: "Get information about an manga",
+    options: [
+      {
+        name: "params",
+        description: "The parameters to search for",
+        type: ApplicationCommandOptionType.String,
+        required: true,
+      },
+    ],
+  },
 
   callback: async (client: Client, interaction: CommandInteraction) => {
+    if (!interaction.isChatInputCommand()) return;
+
     await interaction.deferReply();
 
-    const title = interaction.options.get("params")?.value as string;
+    const title = interaction.options.getString("params", true);
 
     const mangaClient = new MangaClient();
 

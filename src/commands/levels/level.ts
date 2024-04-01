@@ -1,8 +1,8 @@
 import {
   Client,
   CommandInteraction,
-  SlashCommandBuilder,
   AttachmentBuilder,
+  ApplicationCommandOptionType,
 } from "discord.js";
 import Level from "../../models/Level";
 import { Font } from "canvacord";
@@ -10,14 +10,18 @@ import calculate_level_xp from "../../util/calculate_level_xp";
 import { UserLevelCard } from "../../util/user_level_card";
 
 export default {
-  data: new SlashCommandBuilder()
-    .setName("level")
-    .setDescription("Check your or someone else's level.")
-    .addUserOption((option) =>
-      option
-        .setName("target-user")
-        .setDescription("The user you want to check the level of.")
-    ),
+  data: {
+    name: "level",
+    description: "Check your or someone else's level.",
+    options: [
+      {
+        name: "target-user",
+        description: "The user you want to check the level of.",
+        type: ApplicationCommandOptionType.User,
+        required: false,
+      },
+    ],
+  },
 
   callback: async (client: Client, interaction: CommandInteraction) => {
     if (!interaction.guild) return;
