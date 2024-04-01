@@ -26,14 +26,4 @@ export default async (
       `*️⃣  User ${oldMember.user.username} gained role "${role.name}"`
     );
   }
-
-  if (!!oldMember.premiumSince !== !!newMember.premiumSince) {
-    const role = oldMember.guild.roles.cache.find(
-      (role) => role.name === oldMember.user.username
-    );
-
-    if (!role) return;
-
-    role.delete();
-  }
 };

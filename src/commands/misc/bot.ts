@@ -1,7 +1,6 @@
 import { Client, CommandInteraction, EmbedBuilder } from "discord.js";
 import { devs } from "../../../config.json";
-import { errorEmbed, successEmbed } from "../../util/embed_helper";
-import { error } from "console";
+import { errorEmbed } from "../../util/embed_helper";
 
 export default {
   data: {
@@ -15,7 +14,7 @@ export default {
 
     if (!user)
       return interaction.editReply({
-        embeds: [await errorEmbed("Error fetching bot data.")],
+        embeds: [errorEmbed("Error fetching bot data.")],
       });
 
     const embed = new EmbedBuilder()
