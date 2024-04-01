@@ -10,6 +10,7 @@ const client = new Client({
     IntentsBitField.Flags.GuildMembers,
     IntentsBitField.Flags.MessageContent,
     IntentsBitField.Flags.GuildModeration,
+    IntentsBitField.Flags.GuildPresences,
   ],
 });
 
