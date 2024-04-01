@@ -3,6 +3,7 @@
 
 import { JSX, Builder, loadImage } from "canvacord";
 import { Role } from "discord.js";
+import { cn } from "./cn";
 
 interface Props {
   displayName: string;
@@ -98,22 +99,41 @@ export class UserCard extends Builder<Props> {
       userStatus,
     } = this.options.getOptions();
 
-    let statusColor = "gray-600";
+    let statusBgColor = "bg-gray-600";
     switch (userStatus) {
       case "online":
-        statusColor = "green-600";
+        statusBgColor = "bg-green-600";
         break;
       case "idle":
-        statusColor = "yellow-600";
+        statusBgColor = "bg-yellow-600";
         break;
       case "dnd":
-        statusColor = "red-600";
+        statusBgColor = "bg-red-600";
         break;
       case "offline":
-        statusColor = "gray-600";
+        statusBgColor = "bg-gray-600";
         break;
       default:
-        statusColor = "gray-600";
+        statusBgColor = "bg-gray-600";
+        break;
+    }
+
+    let statusBorderColor = "border-gray-600";
+    switch (userStatus) {
+      case "online":
+        statusBorderColor = "border-green-600";
+        break;
+      case "idle":
+        statusBorderColor = "border-yellow-600";
+        break;
+      case "dnd":
+        statusBorderColor = "border-red-600";
+        break;
+      case "offline":
+        statusBorderColor = "border-gray-600";
+        break;
+      default:
+        statusBorderColor = "border-gray-600";
         break;
     }
 
@@ -125,7 +145,7 @@ export class UserCard extends Builder<Props> {
       <div className="m-0 p-0 h-full w-full flex flex-col items-center justify-between rounded-xl border-4 border-sky-200 text-gray-300 relative overflow-hidden">
         <img
           src={image.toDataURL()}
-          className="m-0 p-0 w-[930px] h-[600px] absolute -z-10"
+          className="m-0 p-0 w-[930px] h-[600px] absolute "
         />
         <div className="m-0 p-0 py-3 w-full bg-sky-200 flex items-center justify-center relative">
           <img
@@ -147,10 +167,16 @@ export class UserCard extends Builder<Props> {
             <div className="p-0 m-0 w-1/2 flex justify-center items-center relative">
               <img
                 src={avatar}
-                className={`m-0 p-0 flex rounded-2xl w-48 h-48 bg-sky-200 border-4 border-${statusColor}`}
+                className={cn(
+                  `m-0 p-0 flex rounded-2xl w-48 h-48 bg-sky-200 border-4`,
+                  statusBorderColor
+                )}
               />
               <div
-                className={`m-0 p-0 w-10 h-10 bg-${statusColor} rounded-full absolute -bottom-2 right-[24%] border-2 border-black/30 flex`}
+                className={cn(
+                  `m-0 p-0 w-10 h-10 rounded-full absolute -bottom-2 right-[24%] border-2 border-black/30 flex`,
+                  statusBgColor
+                )}
               />
             </div>
             <div className="m-0 p-0 flex flex-col w-1/2 justify-center border-2 border-sky-200 rounded-xl overflow-hidden">
@@ -170,7 +196,8 @@ export class UserCard extends Builder<Props> {
                 <h4 className="m-0 p-0 text-2xl w-full flex items-center justify-between">
                   <span className="m-0 p-0 mr-3">Display:</span>
                   <span
-                    className={`m-0 p-0 text-3xl text-[${displayHexColor}]`}
+                    style={{ color: displayHexColor }}
+                    className={`m-0 p-0 text-3xl`}
                   >
                     {displayName}
                   </span>
@@ -205,9 +232,13 @@ export class UserCard extends Builder<Props> {
             </h2>
             <ul className="m-0 flex flex-wrap items-center p-3">
               {roles.map((role) => (
-                <li className="m-2 p-0">
+                <li className="m-2 p-0" key={role.name}>
                   <p
-                    className={`m-0 p-0 bg-[${role.hexColor}] bg-opacity-50 text-xl px-3 py-1 rounded-xl min-w-[80px] flex items-center justify-center border-2 border-[${role.hexColor}]`}
+                    style={{
+                      backgroundColor: `${role.hexColor}88`,
+                      borderColor: role.hexColor,
+                    }}
+                    className={`m-0 p-0 text-xl px-3 py-1 rounded-xl min-w-[80px] flex items-center justify-center border-2`}
                   >
                     {role.name}
                   </p>
