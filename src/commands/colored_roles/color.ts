@@ -8,11 +8,6 @@ import {
   PermissionFlagsBits,
 } from "discord.js";
 
-import * as PImage from "pureimage";
-import * as fs from "fs";
-
-import hexToRgba = require("hex-to-rgba");
-
 import { errorEmbed } from "../../util/embed_helper";
 import { RoleColor } from "../../util/role_color";
 
