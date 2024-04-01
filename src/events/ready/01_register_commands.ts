@@ -20,8 +20,6 @@ export default async (client: Client) => {
     }
 
     localCommands.forEach(async (command: any) => {
-      console.log(command.data.name);
-
       const { name, description, options } = command.data;
 
       const existingCommand = applicationCommands.cache.find(
