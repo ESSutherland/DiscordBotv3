@@ -5,9 +5,9 @@ import {
   AttachmentBuilder,
 } from "discord.js";
 import Level from "../../models/Level";
-import { Font, RankCardBuilder } from "canvacord";
+import { Font } from "canvacord";
 import calculate_level_xp from "../../util/calculate_level_xp";
-import { UserCard } from "../../util/user_card";
+import { UserLevelCard } from "../../util/user_level_card";
 
 export default {
   data: new SlashCommandBuilder()
@@ -59,5 +59,31 @@ export default {
 
     let currentRank =
       allLevels.findIndex((lvl) => lvl.userId === targetUser.id) + 1;
+
+    await Font.fromFile("src/fonts/SimpleStamp.otf");
+
+    const card = new UserLevelCard()
+      .setAvatar(
+        targetUser.user.displayAvatarURL({ size: 256, extension: "png" })
+      )
+      .setDisplayName(targetUser.user.displayName)
+      .setUserStatus(targetUser.presence?.status || "offline")
+      .setRank(currentRank)
+      .setLevel(fetchedLevel.level)
+      .setXp(fetchedLevel.xp)
+      .setXpToNextLevel(calculate_level_xp(fetchedLevel.level))
+      .setXpPercentage(
+        Math.floor(
+          (fetchedLevel.xp / calculate_level_xp(fetchedLevel.level)) * 100
+        )
+      );
+
+    const image = await card.build({ format: "png" });
+
+    const attachment = new AttachmentBuilder(image);
+
+    interaction.editReply({
+      files: [attachment],
+    });
   },
 };

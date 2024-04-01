@@ -5,24 +5,31 @@
 // Builder is a base class to create your own builders
 // loadImage is a helper function to load images from url or path
 import { JSX, Builder, loadImage } from "canvacord";
+import { cn } from "./cn";
 
 interface Props {
   displayName: string;
-  type: "welcome" | "goodbye";
+  userStatus: string;
+  rank: number;
+  level: number;
+  xp: number;
+  xpToNextLevel: number;
+  xpPercentage: number;
   avatar: string;
-  message: string;
 }
 
-export class GreetingsCard extends Builder<Props> {
+export class UserLevelCard extends Builder<Props> {
   constructor() {
-    // set width and height
-    super(930, 280);
-    // initialize props
+    super(800, 300);
     this.bootstrap({
       displayName: "",
-      type: "welcome",
       avatar: "",
-      message: "",
+      userStatus: "",
+      rank: 0,
+      level: 0,
+      xp: 0,
+      xpToNextLevel: 0,
+      xpPercentage: 0,
     });
   }
 
@@ -31,41 +38,146 @@ export class GreetingsCard extends Builder<Props> {
     return this;
   }
 
-  setType(value: Props["type"]) {
-    this.options.set("type", value);
-    return this;
-  }
-
   setAvatar(value: string) {
     this.options.set("avatar", value);
     return this;
   }
 
-  setMessage(value: string) {
-    this.options.set("message", value);
+  setUserStatus(value: string) {
+    this.options.set("userStatus", value);
     return this;
   }
 
-  // this is where you have to define output ui
-  async render() {
-    const { type, displayName, avatar, message } = this.options.getOptions();
+  setRank(value: number) {
+    this.options.set("rank", value);
+    return this;
+  }
 
-    // make sure to use the loadImage helper function to load images, otherwise you may get errors
-    const image = await loadImage(avatar);
+  setLevel(value: number) {
+    this.options.set("level", value);
+    return this;
+  }
+
+  setXp(value: number) {
+    this.options.set("xp", value);
+    return this;
+  }
+
+  setXpToNextLevel(value: number) {
+    this.options.set("xpToNextLevel", value);
+    return this;
+  }
+
+  setXpPercentage(value: number) {
+    this.options.set("xpPercentage", value);
+    return this;
+  }
+
+  async render() {
+    const {
+      displayName,
+      userStatus,
+      avatar,
+      level,
+      rank,
+      xp,
+      xpPercentage,
+      xpToNextLevel,
+    } = this.options.getOptions();
+
+    let statusBgColor = "bg-gray-600";
+    switch (userStatus) {
+      case "online":
+        statusBgColor = "bg-green-600";
+        break;
+      case "idle":
+        statusBgColor = "bg-yellow-600";
+        break;
+      case "dnd":
+        statusBgColor = "bg-red-600";
+        break;
+      case "offline":
+        statusBgColor = "bg-gray-600";
+        break;
+      default:
+        statusBgColor = "bg-gray-600";
+        break;
+    }
+
+    let statusBorderColor = "border-gray-600";
+    switch (userStatus) {
+      case "online":
+        statusBorderColor = "border-green-600";
+        break;
+      case "idle":
+        statusBorderColor = "border-yellow-600";
+        break;
+      case "dnd":
+        statusBorderColor = "border-red-600";
+        break;
+      case "offline":
+        statusBorderColor = "border-gray-600";
+        break;
+      default:
+        statusBorderColor = "border-gray-600";
+        break;
+    }
+
+    const image = await loadImage(
+      "https://raw.githubusercontent.com/ESSutherland/Pengwin/main/public/BG.png"
+    );
 
     return (
-      <div className="h-full w-full flex flex-col items-center justify-center bg-sky-500 rounded-xl">
-        <div className="px-6 bg-[#2B2F35AA] w-[96%] h-[84%] rounded-lg flex items-center">
-          <img
-            src={image.toDataURL()}
-            className="flex h-[40] w-[40] rounded-full"
-          />
-          <div className="flex flex-col ml-6">
-            <h1 className="text-5xl text-white font-bold m-0">
-              {type === "welcome" ? "Welcome" : "Goodbye"},{" "}
-              <span className="text-blue-500">{displayName}!</span>
+      <div
+        style={{
+          backgroundImage: `url(${image.toDataURL()})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+        className="p-0 m-0 flex h-full w-full rounded-xl items-center justify-center text-gray-300"
+      >
+        <div className="m-0 p-0 py-6 w-[95%] h-[86%] bg-black/60 flex flex-col items-center justify-between rounded-xl">
+          <div className="m-0 p-0 flex w-[80%] items-center justify-between relative">
+            <img
+              src={avatar}
+              className={cn(
+                `p-0 m-0 w-28 h-28 rounded-full border-2`,
+                statusBorderColor
+              )}
+            />
+            <div
+              className={cn(
+                `p-0 m-0 absolute w-8 h-8 rounded-full border-2 border-black/20 bottom-0 flex`,
+                statusBgColor
+              )}
+            />
+            <h1 className="m-0 p-0 mx-10 flex items-center text-5xl overflow-hidden h-full">
+              {displayName}
             </h1>
-            <p className="text-gray-300 text-3xl m-0">{message}</p>
+            <h2 className="m-0 p-0 text-3xl flex items-center justify-center">
+              Rank:{" "}
+              <span className="p-0 m-0 text-4xl text-sky-400 ml-2">
+                #{rank}
+              </span>
+            </h2>
+          </div>
+          <div className="p-5 m-0 w-full mx-10 flex items-center justify-center">
+            <h3 className="text-3xl m-0 p-0">
+              Level:<span className="m-0 p-0 text-sky-400 ml-2">{level}</span>
+            </h3>
+            <div className="m-0 p-0 mx-5 flex w-[400px] h-4 bg-gray-300 rounded-xl overflow-hidden">
+              <div
+                style={{
+                  backgroundImage: `linear-gradient(to right, #38bdf8, #0284c7)`,
+                  width: `${xpPercentage}%`,
+                }}
+                className="m-0 p-0 flex h-full"
+              ></div>
+            </div>
+            <h4 className="m-0 p-0">
+              {xp}/{xpToNextLevel} XP
+            </h4>
           </div>
         </div>
       </div>
