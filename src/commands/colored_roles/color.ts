@@ -14,6 +14,7 @@ import * as fs from "fs";
 import hexToRgba = require("hex-to-rgba");
 
 import { errorEmbed } from "../../util/embed_helper";
+import { RoleColor } from "../../util/role_color";
 
 export default {
   data: {
@@ -65,21 +66,11 @@ export default {
 
     const colorHex = color.toUpperCase().replace("#", "") as HexColorString;
 
-    const colorImg = PImage.make(100, 100);
-    const ctx = colorImg.getContext("2d");
-    const rgbaColor = hexToRgba(color, 1);
+    const colorImg = await new RoleColor()
+      .setColor(colorHex)
+      .build({ format: "png" });
 
-    ctx.fillStyle = rgbaColor;
-    ctx.fillRect(0, 0, 100, 100);
-
-    await PImage.encodePNGToStream(
-      colorImg,
-      fs.createWriteStream("src/images/color.png")
-    );
-
-    const imgAttachment = new AttachmentBuilder("src/images/color.png").setName(
-      "color.png"
-    );
+    const imgAttachment = new AttachmentBuilder(colorImg).setName("color.png");
 
     const guild = interaction.guild;
 
@@ -134,7 +125,7 @@ export default {
         embeds: [
           await colorEmbed(
             colorHex,
-            `Color set to ${"`#" + colorHex + "`"} for ${user.toString()}`
+            `Color set to \`#${colorHex}\` for ${user.toString()}`
           ),
         ],
       });
@@ -155,7 +146,7 @@ export default {
       embeds: [
         await colorEmbed(
           colorHex,
-          `Color set to ${"`#" + colorHex + "`"} for ${user.toString()}`
+          `Color set to \`#${colorHex}\` for ${user.toString()}`
         ),
       ],
     });
