@@ -10,8 +10,7 @@ import { successEmbed } from "../../util/embed_helper";
 export default {
   data: {
     name: "boostmessage",
-    description:
-      "Set the message that will be sent when a user boosts the server",
+    description: "Set the boost message for the server.",
     options: [
       {
         name: "message",
