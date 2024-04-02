@@ -18,12 +18,6 @@ export default {
         type: ApplicationCommandOptionType.Subcommand,
         options: [
           {
-            name: "role",
-            description: "The role to set",
-            type: ApplicationCommandOptionType.Role,
-            required: true,
-          },
-          {
             name: "type",
             description: "The type of role",
             type: ApplicationCommandOptionType.String,
@@ -46,6 +40,12 @@ export default {
                 value: "movie",
               },
             ],
+          },
+          {
+            name: "role",
+            description: "The role to set",
+            type: ApplicationCommandOptionType.Role,
+            required: true,
           },
         ],
       },
