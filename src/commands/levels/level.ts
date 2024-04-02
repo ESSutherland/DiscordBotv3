@@ -74,7 +74,11 @@ export default {
 
     const card = new UserLevelCard()
       .setAvatar(
-        targetUser.user.displayAvatarURL({ size: 256, extension: "png" })
+        targetUser.user.displayAvatarURL({
+          size: 256,
+          extension: "png",
+          forceStatic: true,
+        })
       )
       .setDisplayName(targetUser.user.displayName)
       .setUserStatus(targetUser.presence?.status || "offline")

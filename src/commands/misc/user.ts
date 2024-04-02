@@ -42,9 +42,21 @@ export default {
       .map((role) => role)
       .sort((a, b) => b.position - a.position);
 
+    console.log(
+      targetUser.user.displayAvatarURL({
+        size: 256,
+        extension: "png",
+        forceStatic: true,
+      })
+    );
+
     const card = new UserCard()
       .setAvatar(
-        targetUser.user.displayAvatarURL({ size: 256, extension: "png" })
+        targetUser.user.displayAvatarURL({
+          size: 256,
+          extension: "png",
+          forceStatic: true,
+        })
       )
       .setDisplayName(targetUser.user.displayName)
       .setUserName(targetUser.user.username)
