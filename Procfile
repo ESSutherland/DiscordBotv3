@@ -1,1 +1,1 @@
-worker: npm start
+worker: @napi-rs/image-linux-x64-gnu && npm start
