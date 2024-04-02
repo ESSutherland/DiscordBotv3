@@ -15,7 +15,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutkli/jikan-ts": "^1.2.1",
     "@types/sharp": "^0.32.0",
     "axios": "^1.6.8",
     "axios-cache-interceptor": "^1.5.1",

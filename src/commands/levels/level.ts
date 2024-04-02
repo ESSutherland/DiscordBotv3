@@ -25,7 +25,8 @@ export default {
   },
 
   callback: async (client: Client, interaction: CommandInteraction) => {
-    if (!interaction.guild) return;
+    if (!interaction.guild || !interaction.inGuild() || !interaction.member)
+      return;
 
     await interaction.deferReply();
 
@@ -85,7 +86,8 @@ export default {
         Math.floor(
           (fetchedLevel.xp / calculate_level_xp(fetchedLevel.level)) * 100
         )
-      );
+      )
+      .setIsPremium(!!targetUser.premiumSince);
 
     const image = await card.build({ format: "png" });
 

@@ -11,7 +11,7 @@ export const getLocalCommands = async (exceptions?: string[]) => {
     const commandFiles = getFiles(category);
 
     let commandPromises = commandFiles.map(async (command) => {
-      const commandImport = await import(command);
+      const commandImport = require(command);
       const commandObject = commandImport.default;
 
       if (exceptions?.includes(commandObject.data.name)) {

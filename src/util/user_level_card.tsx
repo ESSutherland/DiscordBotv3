@@ -16,6 +16,7 @@ interface Props {
   xpToNextLevel: number;
   xpPercentage: number;
   avatar: string;
+  isPremium: boolean;
 }
 
 export class UserLevelCard extends Builder<Props> {
@@ -30,6 +31,7 @@ export class UserLevelCard extends Builder<Props> {
       xp: 0,
       xpToNextLevel: 0,
       xpPercentage: 0,
+      isPremium: false,
     });
   }
 
@@ -73,6 +75,11 @@ export class UserLevelCard extends Builder<Props> {
     return this;
   }
 
+  setIsPremium(value: boolean) {
+    this.options.set("isPremium", value);
+    return this;
+  }
+
   async render() {
     const {
       displayName,
@@ -83,6 +90,7 @@ export class UserLevelCard extends Builder<Props> {
       xp,
       xpPercentage,
       xpToNextLevel,
+      isPremium,
     } = this.options.getOptions();
 
     let statusBgColor = "bg-gray-600";
@@ -152,9 +160,16 @@ export class UserLevelCard extends Builder<Props> {
                 statusBgColor
               )}
             />
-            <h1 className="m-0 p-0 mx-10 flex items-center text-5xl overflow-hidden h-full">
-              {displayName}
-            </h1>
+            <div className="m-0 p-0 flex flex-col items-center justify-center">
+              <h1 className="m-0 p-0 mx-10 flex items-center text-5xl overflow-hidden h-[80px]">
+                {displayName}
+              </h1>
+              {isPremium && (
+                <h2 className="m-0 p-0 text-3xl text-fuchsia-500">
+                  2x XP Boost
+                </h2>
+              )}
+            </div>
             <h2 className="m-0 p-0 text-3xl flex items-center justify-center">
               Rank:{" "}
               <span className="p-0 m-0 text-4xl text-sky-400 ml-2">

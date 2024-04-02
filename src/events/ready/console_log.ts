@@ -5,5 +5,5 @@ export default async (client: Client) => {
     type: ActivityType.Playing,
   });
 
-  console.log(`✅ ${client.user?.tag} is online!`);
+  console.log(`✅ ${client.user?.username} is online!`);
 };

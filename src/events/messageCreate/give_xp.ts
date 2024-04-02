@@ -16,7 +16,13 @@ export default async (client: Client, message: Message) => {
   if (!message.guild || message.author.bot || cooldowns.has(message.author.id))
     return;
 
-  const xpToGive = getRandomXp(10, 25);
+  let xpToGive = getRandomXp(10, 25);
+
+  const member = await message.guild.members.fetch(message.author.id);
+
+  if (member.premiumSince) {
+    xpToGive = xpToGive * 2;
+  }
 
   const query = {
     userId: message.author.id,
