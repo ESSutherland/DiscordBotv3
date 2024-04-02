@@ -1,6 +1,7 @@
-import { Client, Message } from "discord.js";
+import { ChannelType, Client, EmbedBuilder, Message } from "discord.js";
 import Level from "../../models/Level";
 import calculate_level_xp from "../../util/calculate_level_xp";
+import Channels from "../../models/Channels";
 
 const cooldowns = new Set();
 
@@ -12,20 +13,16 @@ const getRandomXp = (min: number, max: number) => {
 };
 
 export default async (client: Client, message: Message) => {
-  if (
-    !message.inGuild() ||
-    message.author.bot ||
-    cooldowns.has(message.author.id)
-  )
+  if (!message.guild || message.author.bot || cooldowns.has(message.author.id))
     return;
 
-  const xpToGive = getRandomXp(5, 15);
+  const xpToGive = getRandomXp(10, 25);
+  console.log(xpToGive);
 
   const query = {
     userId: message.author.id,
     guildId: message.guild.id,
   };
-
   try {
     const level = await Level.findOne(query);
 
@@ -33,12 +30,35 @@ export default async (client: Client, message: Message) => {
       level.xp += xpToGive;
 
       if (level.xp >= calculate_level_xp(level.level)) {
-        level.xp = 0;
+        level.xp = level.xp - calculate_level_xp(level.level);
         level.level += 1;
 
-        message.channel.send(
-          `Congrats ${message.author}, you've leveled up to level ${level.level}!`
-        );
+        const channelId = await Channels.findOne({
+          guildId: message.guild.id,
+          type: "bot",
+        }).select("-_id channelId");
+
+        if (channelId) {
+          const channel = message.guild.channels.cache.get(channelId.channelId);
+
+          if (channel && channel.type === ChannelType.GuildText) {
+            const embed = new EmbedBuilder()
+              .setAuthor({
+                name: `${message.author.displayName} leveled up!`,
+                iconURL: message.author.displayAvatarURL(),
+              })
+              .setColor(message.guild.members.me?.displayColor || "Random")
+              .setDescription(
+                `Congrats ${message.author}, you've leveled up to level **${
+                  level.level
+                }**! ${level.level === 69 ? "Nice." : ""}`
+              );
+
+            channel.send({
+              embeds: [embed],
+            });
+          }
+        }
       }
 
       await level.save().catch((e) => {

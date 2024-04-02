@@ -8,6 +8,7 @@ import Level from "../../models/Level";
 import { Font } from "canvacord";
 import calculate_level_xp from "../../util/calculate_level_xp";
 import { UserLevelCard } from "../../util/user_level_card";
+import { errorEmbed } from "../../util/embed_helper";
 
 export default {
   data: {
@@ -43,11 +44,15 @@ export default {
     });
 
     if (!fetchedLevel) {
-      return interaction.editReply(
-        targetUser.id === interaction.user.id
-          ? "You haven't earned any XP yet."
-          : `${targetUser.user.username} hasn't earned any XP yet.`
-      );
+      return interaction.editReply({
+        embeds: [
+          errorEmbed(
+            targetUser.id === interaction.user.id
+              ? "You haven't earned any XP yet."
+              : `${targetUser.user.username} hasn't earned any XP yet.`
+          ),
+        ],
+      });
     }
 
     const allLevels = await Level.find({
