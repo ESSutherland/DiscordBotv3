@@ -8,7 +8,7 @@ import {
   ComponentType,
   SlashCommandBuilder,
 } from "discord.js";
-import { Pokemon, PokemonClient } from "pokenode-ts";
+import { Pokemon, PokemonClient, PokemonSpeciesVariety } from "pokenode-ts";
 import { pokemonMessageData } from "../../util/data";
 import { errorEmbed } from "../../util/embed_helper";
 
@@ -85,15 +85,16 @@ export default {
       });
     }
 
-    const varList = pokemonSpecies.varieties
-      .map((variety) => {
+    const varList: PokemonSpeciesVariety[] = pokemonSpecies.varieties.reduce(
+      (array: PokemonSpeciesVariety[], variety: PokemonSpeciesVariety, i) => {
         if (
-          blockedList.some((blocked) => variety.pokemon.name.includes(blocked))
+          !blockedList.some((blocked) => variety.pokemon.name.includes(blocked))
         )
-          return;
-        return variety;
-      })
-      .filter((variety) => variety !== undefined);
+          array.push(variety);
+        return array;
+      },
+      []
+    );
 
     let pageData = await Promise.all(
       varList.map(async (variety, index) => {
