@@ -1,5 +1,4 @@
 import { Client, GuildMember } from "discord.js";
-import { devs } from "../../../config.json";
 import Channels from "../../models/Channels";
 export default async (client: Client, member: GuildMember) => {
   const message = `👋 User ${member.user.username} left the server. ${
