@@ -6,7 +6,7 @@ import {
   GuildEmoji,
   Interaction,
 } from "discord.js";
-import sharp = require("sharp");
+import * as sharp from "sharp";
 
 export default {
   data: {

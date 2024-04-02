@@ -1,6 +1,7 @@
 import { Client } from "discord.js";
 import { getFiles } from "../util/get_files";
 import * as path from "path";
+import { pathToFileURL } from "url";
 
 export const eventHandler = async (client: Client) => {
   const eventFolders = getFiles(path.join(__dirname, "../events"), true);
@@ -17,9 +18,9 @@ export const eventHandler = async (client: Client) => {
 
     client.on(eventName, async (...arg) => {
       eventFiles.forEach(async (file) => {
-        const eventFunction = await import("file://" + file);
+        const eventFunction = (await import(file)).default;
 
-        eventFunction.default(client, ...arg);
+        eventFunction(client, ...arg);
       });
     });
   });

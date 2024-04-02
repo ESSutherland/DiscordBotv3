@@ -1,5 +1,6 @@
 import * as path from "path";
 import { getFiles } from "./get_files";
+import { pathToFileURL } from "url";
 
 export const getLocalCommands = async (exceptions?: string[]) => {
   let localCommands: any[] = [];
@@ -10,7 +11,7 @@ export const getLocalCommands = async (exceptions?: string[]) => {
     const commandFiles = getFiles(category);
 
     let commandPromises = commandFiles.map(async (command) => {
-      const commandImport = await import("file://" + command);
+      const commandImport = await import(command);
       const commandObject = commandImport.default;
 
       if (exceptions?.includes(commandObject.data.name)) {

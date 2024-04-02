@@ -17,7 +17,6 @@ export default async (client: Client, message: Message) => {
     return;
 
   const xpToGive = getRandomXp(10, 25);
-  console.log(xpToGive);
 
   const query = {
     userId: message.author.id,
