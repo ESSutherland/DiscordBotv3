@@ -157,7 +157,7 @@ export class UserCard extends Builder<Props> {
               backgroundImage: "linear-gradient(to top, #38bdf8, #0284c7)",
               backgroundClip: "text",
             }}
-            className="p-0 m-0 text-5xl text-transparent"
+            className="p-0 m-0 text-5xl text-transparent h-[55px]"
           >
             {guildName}
           </h1>
