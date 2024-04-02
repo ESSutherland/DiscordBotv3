@@ -1,7 +1,13 @@
-import { Client, CommandInteraction, EmbedBuilder, User } from "discord.js";
+import {
+  Client,
+  CommandInteraction,
+  EmbedBuilder,
+  Interaction,
+  User,
+} from "discord.js";
 
 export const successEmbed = (
-  interaction: CommandInteraction,
+  interaction: Interaction,
   description: string,
   footer?: string,
   author?: User
