@@ -42,14 +42,6 @@ export default {
       .map((role) => role)
       .sort((a, b) => b.position - a.position);
 
-    console.log(
-      targetUser.user.displayAvatarURL({
-        size: 256,
-        extension: "png",
-        forceStatic: true,
-      })
-    );
-
     const card = new UserCard()
       .setAvatar(
         targetUser.user.displayAvatarURL({
@@ -62,7 +54,11 @@ export default {
       .setUserName(targetUser.user.username)
       .setGuildName(interaction.guild.name)
       .setGuildIcon(
-        interaction.guild.iconURL({ size: 256, extension: "png" }) || ""
+        interaction.guild.iconURL({
+          size: 256,
+          extension: "png",
+          forceStatic: true,
+        }) || ""
       )
       .setJoinedAt(targetUser.joinedAt?.toDateString() as string)
       .setRegisteredAt(targetUser.user.createdAt.toDateString())
