@@ -62,21 +62,20 @@ export default {
 
     if (!role) return interaction.editReply("Role not found.");
 
-    const roleData = await Roles.findOne({
-      guildId: interaction.guild.id,
-      type: type,
-    });
-
-    if (roleData) {
-      roleData.roleId = role.id;
-      return roleData.save();
-    }
-
-    Roles.create({
-      guildId: interaction.guild.id,
-      roleId: role.id,
-      type: type,
-    });
+    await Roles.findOneAndUpdate(
+      {
+        guildId: interaction.guild.id,
+        type: type,
+      },
+      {
+        guildId: interaction.guild.id,
+        roleId: role.id,
+        type: type,
+      },
+      {
+        upsert: true,
+      }
+    );
 
     return interaction.editReply({
       embeds: [
