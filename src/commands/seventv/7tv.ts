@@ -4,7 +4,7 @@ import {
   Client,
   CommandInteraction,
   GuildEmoji,
-  Interaction,
+  PermissionFlagsBits,
 } from "discord.js";
 import * as sharp from "sharp";
 import { errorEmbed, successEmbed } from "../../util/embed_helper";
@@ -35,7 +35,8 @@ export default {
     ],
   },
 
-  permissionsRequired: ["MANAGE_EMOJIS_AND_STICKERS"],
+  permissionsRequired: [PermissionFlagsBits.ManageGuildExpressions],
+  botPermissions: [PermissionFlagsBits.ManageGuildExpressions],
 
   callback: async (client: Client, interaction: CommandInteraction) => {
     if (
