@@ -7,6 +7,7 @@ import {
   Interaction,
 } from "discord.js";
 import * as sharp from "sharp";
+import { errorEmbed, successEmbed } from "../../util/embed_helper";
 
 export default {
   data: {
@@ -50,14 +51,23 @@ export default {
     const name = interaction.options.getString("name", true);
     const animated = interaction.options.getBoolean("animated") || false;
 
-    const image = await axios.get(
-      `https://cdn.7tv.app/emote/${emoteId}/1x.webp`,
-      { responseType: "arraybuffer" }
-    );
+    let emoteImage;
+
+    try {
+      const image = await axios.get(
+        `https://cdn.7tv.app/emote/${emoteId}/1x.webp`,
+        { responseType: "arraybuffer" }
+      );
+      emoteImage = image;
+    } catch (error) {
+      return await interaction.editReply({
+        embeds: [errorEmbed("Failed to fetch the 7TV emote.")],
+      });
+    }
 
     let emoteData = await uploadEmote(
       interaction,
-      image.data,
+      emoteImage.data,
       name,
       animated,
       [32, 32]
@@ -65,12 +75,17 @@ export default {
 
     if (!emoteData) {
       return await interaction.editReply({
-        content: "Failed to add the 7TV emote.",
+        embeds: [errorEmbed("Failed to add the 7TV emote.")],
       });
     }
 
     await interaction.editReply({
-      content: "Successfully added the 7TV emote.",
+      embeds: [
+        successEmbed(
+          interaction,
+          `Emote \`${name}\` added successfully. ${emoteData}`
+        ),
+      ],
     });
   },
 };
