@@ -1,6 +1,5 @@
 import * as path from "path";
 import { getFiles } from "./get_files";
-import { pathToFileURL } from "url";
 
 export const getLocalCommands = async (exceptions?: string[]) => {
   let localCommands: any[] = [];
