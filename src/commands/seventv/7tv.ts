@@ -34,7 +34,7 @@ export default {
     ],
   },
 
-  requiredPermissions: ["MANAGE_EMOJIS_AND_STICKERS"],
+  permissionsRequired: ["MANAGE_EMOJIS_AND_STICKERS"],
 
   callback: async (client: Client, interaction: CommandInteraction) => {
     if (

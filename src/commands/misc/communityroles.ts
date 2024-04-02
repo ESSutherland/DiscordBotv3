@@ -14,7 +14,7 @@ export default {
     description: "Create comminity roles message",
   },
 
-  requiredPermissions: [PermissionFlagsBits.Administrator],
+  permissionsRequired: [PermissionFlagsBits.Administrator],
 
   callback: async (client: Client, interaction: CommandInteraction) => {
     await interaction.deferReply({ ephemeral: true });

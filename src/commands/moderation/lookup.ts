@@ -21,7 +21,7 @@ export default {
     ],
   },
 
-  requiredPermissions: [PermissionFlagsBits.BanMembers],
+  permissionsRequired: [PermissionFlagsBits.BanMembers],
 
   callback: async (client: Client, interaction: CommandInteraction) => {
     if (!interaction.isChatInputCommand()) return;

@@ -23,7 +23,7 @@ export default {
     ],
   },
 
-  requiredPermissions: [PermissionFlagsBits.Administrator],
+  permissionsRequired: [PermissionFlagsBits.Administrator],
 
   callback: async (client: Client, interaction: CommandInteraction) => {
     if (!interaction.isChatInputCommand() || !interaction.guild) return;
