@@ -1,5 +1,4 @@
 import { Client } from "discord.js";
-import { test_server } from "../../../config.json";
 import { getLocalCommands } from "../../util/get_local_commands";
 import { getApplicationCommands } from "../../util/get_application_commands";
 import { areCommandsDifferent } from "../../util/are_commands_different";
@@ -7,12 +6,17 @@ import { areCommandsDifferent } from "../../util/are_commands_different";
 export default async (client: Client) => {
   try {
     let localCommands = await getLocalCommands();
+    const guild = client.guilds.cache.first();
+
+    if (!guild) {
+      console.error("❌ Could not fetch guild.");
+      return;
+    }
+
+    const serverId = guild.id;
 
     localCommands = localCommands.filter((command) => command !== null);
-    const applicationCommands = await getApplicationCommands(
-      client,
-      test_server
-    );
+    const applicationCommands = await getApplicationCommands(client, serverId);
 
     if (!applicationCommands) {
       console.error("❌ Could not fetch application commands.");
