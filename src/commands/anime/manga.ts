@@ -9,7 +9,7 @@ import {
 export default {
   data: {
     name: "manga",
-    description: "Get information about an manga",
+    description: "Get information about a manga",
     options: [
       {
         name: "params",
