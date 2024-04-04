@@ -65,7 +65,7 @@ export class Leaderboard extends Builder<Props> {
               }}
               className="m-0 p-0 w-[95%] h-[20%] flex items-center justify-between rounded-xl border-4 border-yellow-500 my-2 relative"
             >
-              <div className="m-0 p-0 flex absolute -top-9 -left-3 text-4xl">
+              <div className="m-0 p-0 flex absolute -top-9 -left-2 text-4xl">
                 <span className="m-0 p-0">👑</span>
               </div>
               <div className="m-0 p-0 flex items-center justify-center w-1/4">
@@ -82,7 +82,11 @@ export class Leaderboard extends Builder<Props> {
                 />
               </div>
               <div className="m-0 p-0 flex flex-col items-center justify-center px-20 w-1/2 overflow-hidden">
-                <h3 className="m-0 p-0 text-4xl">{users[0].displayName}</h3>
+                <h3 className="m-0 p-0 text-4xl">
+                  {users[0].displayName.length <= 15
+                    ? users[0].displayName
+                    : `${users[0].displayName.substring(0, 14)}...`}
+                </h3>
                 <h4 className="m-0 p-0 text-2xl">Level {levels[0].level}</h4>
               </div>
             </div>
