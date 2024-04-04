@@ -26,8 +26,6 @@ export class RoleColor extends Builder<Props> {
   async render() {
     const { color } = this.options.getOptions();
 
-    console.log(color);
-
     return (
       <div
         style={{ backgroundColor: `#${color}` }}
