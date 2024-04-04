@@ -110,7 +110,7 @@ export class Leaderboard extends Builder<Props> {
               </div>
               <div className="m-0 p-0 flex flex-col items-center justify-center px-20 w-1/2 overflow-hidden">
                 <h3 className="m-0 p-0 text-4xl">{users[1].displayName}</h3>
-                <h4 className="m-0 p-0 text-2xl">Level {levels[1]}</h4>
+                <h4 className="m-0 p-0 text-2xl">Level {levels[1].level}</h4>
               </div>
             </div>
           )}
@@ -137,7 +137,7 @@ export class Leaderboard extends Builder<Props> {
               </div>
               <div className="m-0 p-0 flex flex-col items-center justify-center px-20 w-1/2 overflow-hidden">
                 <h3 className="m-0 p-0 text-4xl">{users[2].displayName}</h3>
-                <h4 className="m-0 p-0 text-2xl">Level {levels[2]}</h4>
+                <h4 className="m-0 p-0 text-2xl">Level {levels[2].level}</h4>
               </div>
             </div>
           )}
@@ -164,7 +164,7 @@ export class Leaderboard extends Builder<Props> {
               </div>
               <div className="m-0 p-0 flex flex-col items-center justify-center px-20 w-1/2 overflow-hidden">
                 <h3 className="m-0 p-0 text-4xl">{users[3].displayName}</h3>
-                <h4 className="m-0 p-0 text-2xl">Level {levels[3]}</h4>
+                <h4 className="m-0 p-0 text-2xl">Level {levels[3].level}</h4>
               </div>
             </div>
           )}
@@ -191,7 +191,7 @@ export class Leaderboard extends Builder<Props> {
               </div>
               <div className="m-0 p-0 flex flex-col items-center justify-center px-20 w-1/2 overflow-hidden">
                 <h3 className="m-0 p-0 text-4xl">{users[4].displayName}</h3>
-                <h4 className="m-0 p-0 text-2xl">Level {levels[4]}</h4>
+                <h4 className="m-0 p-0 text-2xl">Level {levels[4].level}</h4>
               </div>
             </div>
           )}
