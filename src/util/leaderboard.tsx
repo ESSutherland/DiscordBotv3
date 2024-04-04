@@ -82,10 +82,10 @@ export class Leaderboard extends Builder<Props> {
                 />
               </div>
               <div className="m-0 p-0 flex flex-col items-center justify-center px-20 w-1/2 overflow-hidden">
-                <h3 className="m-0 p-0 text-4xl">
-                  {users[0].displayName.length <= 15
+                <h3 className="m-0 p-0 text-4xl w-full">
+                  {users[0].displayName.length <= 13
                     ? users[0].displayName
-                    : `${users[0].displayName.substring(0, 14)}...`}
+                    : `${users[0].displayName.substring(0, 10)}...`}
                 </h3>
                 <h4 className="m-0 p-0 text-2xl">Level {levels[0].level}</h4>
               </div>
@@ -97,7 +97,7 @@ export class Leaderboard extends Builder<Props> {
               style={{
                 backgroundImage: "linear-gradient(to right, #38bdf8, #0284c7)",
               }}
-              className="m-0 p-0 w-[92%] h-[17%] flex items-center justify-between rounded-xl border-2 border-sky-300 my-2"
+              className="m-0 p-0 w-[95%] h-[17%] flex items-center justify-between rounded-xl border-2 border-sky-300 my-2"
             >
               <div className="m-0 p-0 flex items-center justify-center w-1/4">
                 <h2 className="m-0 p-0 text-5xl text-gray-300">#2</h2>
@@ -114,9 +114,9 @@ export class Leaderboard extends Builder<Props> {
               </div>
               <div className="m-0 p-0 flex flex-col items-center justify-center px-20 w-1/2 overflow-hidden">
                 <h3 className="m-0 p-0 text-4xl">
-                  {users[1].displayName.length <= 15
+                  {users[1].displayName.length <= 13
                     ? users[1].displayName
-                    : `${users[1].displayName.substring(0, 14)}...`}
+                    : `${users[1].displayName.substring(0, 10)}...`}
                 </h3>
                 <h4 className="m-0 p-0 text-2xl">Level {levels[1].level}</h4>
               </div>
@@ -128,7 +128,7 @@ export class Leaderboard extends Builder<Props> {
               style={{
                 backgroundImage: "linear-gradient(to right, #38bdf8, #0284c7)",
               }}
-              className="m-0 p-0 w-[90%] h-[15%] flex items-center justify-between rounded-xl border-2 border-sky-300 my-2"
+              className="m-0 p-0 w-[95%] h-[15%] flex items-center justify-between rounded-xl border-2 border-sky-300 my-2"
             >
               <div className="m-0 p-0 flex items-center justify-center w-1/4">
                 <h2 className="m-0 p-0 text-5xl text-yellow-600">#3</h2>
@@ -145,9 +145,9 @@ export class Leaderboard extends Builder<Props> {
               </div>
               <div className="m-0 p-0 flex flex-col items-center justify-center px-20 w-1/2 overflow-hidden">
                 <h3 className="m-0 p-0 text-4xl">
-                  {users[2].displayName.length <= 15
+                  {users[2].displayName.length <= 13
                     ? users[2].displayName
-                    : `${users[2].displayName.substring(0, 14)}...`}
+                    : `${users[2].displayName.substring(0, 10)}...`}
                 </h3>
                 <h4 className="m-0 p-0 text-2xl">Level {levels[2].level}</h4>
               </div>
@@ -159,7 +159,7 @@ export class Leaderboard extends Builder<Props> {
               style={{
                 backgroundImage: "linear-gradient(to right, #38bdf8, #0284c7)",
               }}
-              className="m-0 p-0 w-[85%] h-[12%] flex items-center justify-between rounded-xl border-2 border-sky-300 my-1"
+              className="m-0 p-0 w-[95%] h-[12%] flex items-center justify-between rounded-xl border-2 border-sky-300 my-1"
             >
               <div className="m-0 p-0 flex items-center justify-center w-1/4">
                 <h2 className="m-0 p-0 text-5xl text-white">#4</h2>
@@ -176,9 +176,9 @@ export class Leaderboard extends Builder<Props> {
               </div>
               <div className="m-0 p-0 flex flex-col items-center justify-center px-20 w-1/2 overflow-hidden">
                 <h3 className="m-0 p-0 text-4xl">
-                  {users[3].displayName.length <= 15
+                  {users[3].displayName.length <= 13
                     ? users[3].displayName
-                    : `${users[3].displayName.substring(0, 14)}...`}
+                    : `${users[3].displayName.substring(0, 10)}...`}
                 </h3>
                 <h4 className="m-0 p-0 text-2xl">Level {levels[3].level}</h4>
               </div>
@@ -190,7 +190,7 @@ export class Leaderboard extends Builder<Props> {
               style={{
                 backgroundImage: "linear-gradient(to right, #38bdf8, #0284c7)",
               }}
-              className="m-0 p-0 w-[85%] h-[12%] flex items-center justify-between rounded-xl border-2 border-sky-300 my-1"
+              className="m-0 p-0 w-[95%] h-[12%] flex items-center justify-between rounded-xl border-2 border-sky-300 my-1"
             >
               <div className="m-0 p-0 flex items-center justify-center w-1/4">
                 <h2 className="m-0 p-0 text-5xl text-white">#5</h2>
@@ -207,9 +207,9 @@ export class Leaderboard extends Builder<Props> {
               </div>
               <div className="m-0 p-0 flex flex-col items-center justify-center px-20 w-1/2 overflow-hidden">
                 <h3 className="m-0 p-0 text-4xl">
-                  {users[4].displayName.length <= 15
+                  {users[4].displayName.length <= 13
                     ? users[4].displayName
-                    : `${users[4].displayName.substring(0, 14)}...`}
+                    : `${users[4].displayName.substring(0, 10)}...`}
                 </h3>
                 <h4 className="m-0 p-0 text-2xl">Level {levels[4].level}</h4>
               </div>
