@@ -47,7 +47,7 @@ export default {
     await interaction.deferReply();
 
     const color = interaction.options.getString("color", true);
-    const regex = "^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$";
+    const regex = "^#?([A-Fa-f0-9]{6})$";
 
     if (!color.match(regex)) {
       return interaction.editReply({

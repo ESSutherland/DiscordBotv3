@@ -1,5 +1,4 @@
 import { Client, GuildMember } from "discord.js";
-import { devs } from "../../../config.json";
 export default async (client: Client, member: GuildMember) => {
   if (member.user.bot) return;
 

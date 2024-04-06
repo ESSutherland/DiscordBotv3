@@ -38,6 +38,10 @@ export class Leaderboard extends Builder<Props> {
       "https://raw.githubusercontent.com/ESSutherland/Pengwin/main/public/BG.png"
     );
 
+    const crownImage = await loadImage(
+      "https://em-content.zobj.net/source/twitter/376/crown_1f451.png"
+    );
+
     return (
       <div
         style={{
@@ -66,7 +70,10 @@ export class Leaderboard extends Builder<Props> {
               className="m-0 p-0 w-[95%] h-[20%] flex items-center justify-between rounded-xl border-4 border-yellow-500 my-2 relative"
             >
               <div className="m-0 p-0 flex absolute -top-9 -left-2 text-4xl">
-                <span className="m-0 p-0">👑</span>
+                <img
+                  src={crownImage.toDataURL()}
+                  className="m-0 p-0 w-10 h-10"
+                />
               </div>
               <div className="m-0 p-0 flex items-center justify-center w-1/4">
                 <h2 className="m-0 p-0 text-6xl text-yellow-500">#1</h2>
