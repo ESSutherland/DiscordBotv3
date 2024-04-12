@@ -1,9 +1,15 @@
 import { AuditLogEvent, Client, EmbedBuilder, GuildBan } from "discord.js";
+import Channels from "../../models/Channels";
 
 export default async (client: Client, ban: GuildBan) => {
-  const channelId = "712439399274774588";
+  const channelId = await Channels.findOne({
+    guildId: ban.guild.id,
+    type: "mod",
+  });
 
-  const modChannel = ban.guild.channels.cache.get(channelId);
+  if (!channelId) return;
+
+  const modChannel = ban.guild.channels.cache.get(channelId.channelId);
 
   if (!modChannel || !modChannel.isTextBased()) return;
 
