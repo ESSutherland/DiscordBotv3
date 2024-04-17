@@ -75,6 +75,7 @@ export default {
             ],
           });
         } catch (error) {
+          console.log(error);
           interaction.editReply({
             embeds: [
               errorEmbed(`Minecraft username \`${username}\` not found.`),
