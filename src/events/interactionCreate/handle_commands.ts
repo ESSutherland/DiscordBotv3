@@ -63,7 +63,10 @@ export default async (client: Client, interaction: Interaction) => {
         });
       }
 
-      if (!member?.roles.cache.has(role.roleId)) {
+      if (
+        !member?.roles.cache.has(role.roleId) &&
+        !devs.includes(interaction.user.id)
+      ) {
         return interaction.reply({
           content: "You need to be a subscriber to use this command!",
           ephemeral: true,
