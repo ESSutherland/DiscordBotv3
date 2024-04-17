@@ -1,4 +1,3 @@
-import { MojangClient } from "@tecc/mojang.js";
 import { Rcon } from "rcon-client";
 import {
   ApplicationCommandOptionType,
@@ -7,6 +6,7 @@ import {
 } from "discord.js";
 import { errorEmbed, successEmbed } from "../../util/embed_helper";
 import MinecraftUsers from "../../models/MinecraftUsers";
+import axios from "axios";
 
 export default {
   data: {
@@ -27,8 +27,6 @@ export default {
   callback: async (client: Client, interaction: CommandInteraction) => {
     if (!interaction.isChatInputCommand() || !interaction.guild) return;
 
-    const mojang = new MojangClient();
-
     await interaction.deferReply();
 
     const username = interaction.options.getString("username", true);
@@ -40,7 +38,11 @@ export default {
     })
       .then(async (rcon) => {
         try {
-          const user = await mojang.getUuid(username);
+          const user = await axios.get(
+            `https://api.mojang.com/users/profiles/minecraft/${username}`
+          );
+
+          console.log(user.data);
 
           const mcData = await MinecraftUsers.findOne({
             userId: interaction.user.id,
@@ -59,11 +61,11 @@ export default {
             {
               userId: interaction.user.id,
               guildId: interaction.guild?.id,
-              minecraftUsername: user.name,
+              minecraftUsername: user.data.name,
             },
             { upsert: true }
           );
-          await rcon.send(`whitelist add ${user.name}`);
+          await rcon.send(`whitelist add ${user.data.name}`);
           rcon.end();
 
           interaction.editReply({

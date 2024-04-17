@@ -16,7 +16,6 @@
   "license": "ISC",
   "dependencies": {
     "@napi-rs/canvas": "^0.1.51",
-    "@tecc/mojang.js": "^0.2.1-alpha",
     "@types/sharp": "^0.32.0",
     "axios": "^1.6.8",
     "axios-cache-interceptor": "^1.5.1",
