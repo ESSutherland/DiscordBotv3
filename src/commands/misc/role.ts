@@ -39,6 +39,10 @@ export default {
                 name: "Movie",
                 value: "movie",
               },
+              {
+                name: "Sub",
+                value: "sub",
+              },
             ],
           },
           {
@@ -79,7 +83,7 @@ export default {
 
     return interaction.editReply({
       embeds: [
-        await successEmbed(
+        successEmbed(
           interaction,
           `Role set to ${role.toString()} for \`${type}\`.`
         ),

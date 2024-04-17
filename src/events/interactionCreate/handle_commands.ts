@@ -1,6 +1,7 @@
 import { Client, Interaction } from "discord.js";
 import { devs, test_server } from "../../../config.json";
 import { getLocalCommands } from "../../util/get_local_commands";
+import Roles from "../../models/Roles";
 
 export default async (client: Client, interaction: Interaction) => {
   if (!interaction.isChatInputCommand()) return;
@@ -41,6 +42,30 @@ export default async (client: Client, interaction: Interaction) => {
       if (!member?.premiumSince && !devs.includes(interaction.user.id)) {
         return interaction.reply({
           content: "You need to be a Nitro subscriber to use this command!",
+          ephemeral: true,
+        });
+      }
+    }
+
+    if (commandObject.subOnly) {
+      const member = await interaction.guild?.members.fetch(
+        interaction.user.id
+      );
+      const role = await Roles.findOne({
+        guildId: interaction.guild?.id,
+        type: "sub",
+      });
+
+      if (!role) {
+        return interaction.reply({
+          content: "This server does not have a subscriber role set up.",
+          ephemeral: true,
+        });
+      }
+
+      if (!member?.roles.cache.has(role.roleId)) {
+        return interaction.reply({
+          content: "You need to be a subscriber to use this command!",
           ephemeral: true,
         });
       }
