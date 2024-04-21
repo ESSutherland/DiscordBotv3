@@ -75,7 +75,6 @@ export default {
             ],
           });
         } catch (error: any) {
-          console.log(error.response.status);
           if (error.response.status === 404) {
             interaction.editReply({
               embeds: [
@@ -87,6 +86,7 @@ export default {
               embeds: [errorEmbed(`An API error occured. Please try again.`)],
             });
           }
+          rcon.end();
         }
       })
       .catch((error) => {
