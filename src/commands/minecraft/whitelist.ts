@@ -42,8 +42,6 @@ export default {
             `https://api.mojang.com/users/profiles/minecraft/${username}`
           );
 
-          console.log(user.data);
-
           const mcData = await MinecraftUsers.findOne({
             userId: interaction.user.id,
             guildId: interaction.guild?.id,
@@ -76,13 +74,19 @@ export default {
               ),
             ],
           });
-        } catch (error) {
-          console.log(error);
-          interaction.editReply({
-            embeds: [
-              errorEmbed(`Minecraft username \`${username}\` not found.`),
-            ],
-          });
+        } catch (error: any) {
+          console.log(error.response.status);
+          if (error.response.status === 404) {
+            interaction.editReply({
+              embeds: [
+                errorEmbed(`Minecraft username \`${username}\` not found.`),
+              ],
+            });
+          } else {
+            interaction.editReply({
+              embeds: [errorEmbed(`An API error occured. Please try again.`)],
+            });
+          }
         }
       })
       .catch((error) => {
