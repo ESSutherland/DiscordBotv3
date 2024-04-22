@@ -6,7 +6,6 @@ import {
 } from "discord.js";
 import { errorEmbed, successEmbed } from "../../util/embed_helper";
 import MinecraftUsers from "../../models/MinecraftUsers";
-import axios from "axios";
 
 export default {
   data: {
@@ -38,14 +37,22 @@ export default {
     })
       .then(async (rcon) => {
         try {
-          const user = await axios.get(
-            `https://api.mojang.com/users/profiles/minecraft/${username}`
-          );
-
           const mcData = await MinecraftUsers.findOne({
             userId: interaction.user.id,
             guildId: interaction.guild?.id,
           });
+
+          const response = await rcon.send(`whitelist add ${username}`);
+          console.log(response);
+
+          if (response.includes("does not exist")) {
+            rcon.end();
+            return interaction.editReply({
+              embeds: [
+                errorEmbed(`Minecraft username \`${username}\` not found.`),
+              ],
+            });
+          }
 
           if (mcData) {
             await rcon.send(`whitelist remove ${mcData.minecraftUsername}`);
@@ -59,11 +66,11 @@ export default {
             {
               userId: interaction.user.id,
               guildId: interaction.guild?.id,
-              minecraftUsername: user.data.name,
+              minecraftUsername: username,
             },
             { upsert: true }
           );
-          await rcon.send(`whitelist add ${user.data.name}`);
+
           rcon.end();
 
           interaction.editReply({
