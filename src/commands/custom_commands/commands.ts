@@ -26,7 +26,7 @@ export default {
 
     if (commands.length === 0) {
       return interaction.editReply({
-        embeds: [await errorEmbed("No custom commands found.")],
+        embeds: [errorEmbed("No custom commands found.")],
       });
     }
 

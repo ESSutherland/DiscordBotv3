@@ -3,7 +3,9 @@ import {
   Client,
   CommandInteraction,
   EmbedBuilder,
+  Role,
 } from "discord.js";
+import Roles from "../../models/Roles";
 
 export default {
   data: {
@@ -31,7 +33,11 @@ export default {
 
     if (!member) return;
 
-    const defaultRole = guild.roles.cache.get("674036927942361118");
+    const roleId = await Roles.findOne({ guildId: guild.id, type: "user" });
+
+    if (!roleId) return;
+
+    const defaultRole = guild.roles.cache.get(roleId.roleId);
 
     if (!defaultRole) return;
 

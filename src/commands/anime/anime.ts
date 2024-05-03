@@ -5,6 +5,7 @@ import {
   CommandInteraction,
   EmbedBuilder,
 } from "discord.js";
+import { errorEmbed } from "../../util/embed_helper";
 
 export default {
   data: {
@@ -32,7 +33,9 @@ export default {
     );
 
     if (animeData.data.data.length === 0) {
-      return interaction.editReply("No anime found with that title");
+      return interaction.editReply({
+        embeds: [errorEmbed("No anime found with the given parameters.")],
+      });
     }
 
     const anime = animeData.data.data[0];

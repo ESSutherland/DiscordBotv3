@@ -36,7 +36,9 @@ export default {
     const targetUser = await interaction.guild.members.fetch(targetUserId);
 
     if (!targetUser) {
-      return interaction.editReply("User not found.");
+      return interaction.editReply({
+        embeds: [errorEmbed("User not found")],
+      });
     }
 
     const fetchedLevel = await Level.findOne({

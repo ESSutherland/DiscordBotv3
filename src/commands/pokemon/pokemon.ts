@@ -1,12 +1,10 @@
 import { ApplicationCommandOptionType, EmbedBuilder } from "discord.js";
 import {
-  ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
   Client,
   CommandInteraction,
   ComponentType,
-  SlashCommandBuilder,
 } from "discord.js";
 import { Pokemon, PokemonClient, PokemonSpeciesVariety } from "pokenode-ts";
 import { pokemonMessageData } from "../../util/data";

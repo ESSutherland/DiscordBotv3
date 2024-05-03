@@ -6,6 +6,7 @@ import {
   CommandInteraction,
 } from "discord.js";
 import { UserCard } from "../../util/user_card";
+import { errorEmbed } from "../../util/embed_helper";
 
 export default {
   data: {
@@ -32,7 +33,9 @@ export default {
     const targetUser = await interaction.guild.members.fetch(targetUserId);
 
     if (!targetUser) {
-      return interaction.editReply("User not found.");
+      return interaction.editReply({
+        embeds: [errorEmbed("User not found")],
+      });
     }
 
     await Font.fromFile("src/fonts/SimpleStamp.otf");

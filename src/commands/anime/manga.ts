@@ -5,6 +5,7 @@ import {
   CommandInteraction,
   EmbedBuilder,
 } from "discord.js";
+import { errorEmbed } from "../../util/embed_helper";
 
 export default {
   data: {
@@ -32,7 +33,9 @@ export default {
     );
 
     if (mangaData.data.data.length === 0) {
-      return interaction.editReply("No manga found with that title");
+      return interaction.editReply({
+        embeds: [errorEmbed("No manga found with the given parameters.")],
+      });
     }
 
     const manga = mangaData.data.data[0];

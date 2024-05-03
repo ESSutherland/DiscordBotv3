@@ -66,7 +66,7 @@ export default {
 
       if (existingCommand) {
         return interaction.editReply({
-          embeds: [await errorEmbed(`Command \`${command}\` already exists.`)],
+          embeds: [errorEmbed(`Command \`${command}\` already exists.`)],
         });
       }
 
@@ -78,9 +78,7 @@ export default {
       });
 
       interaction.editReply({
-        embeds: [
-          await successEmbed(interaction, `Command \`${command}\` created.`),
-        ],
+        embeds: [successEmbed(interaction, `Command \`${command}\` created.`)],
       });
     } else if (subcommand === "delete") {
       const command = interaction.options.getString("command", true);
@@ -92,7 +90,7 @@ export default {
 
       if (!existingCommand) {
         return interaction.editReply({
-          embeds: [await errorEmbed(`Command \`${command}\` not found.`)],
+          embeds: [errorEmbed(`Command \`${command}\` not found.`)],
         });
       }
 
@@ -102,9 +100,7 @@ export default {
       });
 
       interaction.editReply({
-        embeds: [
-          await successEmbed(interaction, `Command \`${command}\` deleted.`),
-        ],
+        embeds: [successEmbed(interaction, `Command \`${command}\` deleted.`)],
       });
     }
   },

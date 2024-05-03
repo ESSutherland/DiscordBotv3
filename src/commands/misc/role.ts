@@ -5,7 +5,7 @@ import {
   PermissionFlagsBits,
 } from "discord.js";
 import Roles from "../../models/Roles";
-import { successEmbed } from "../../util/embed_helper";
+import { errorEmbed, successEmbed } from "../../util/embed_helper";
 
 export default {
   data: {
@@ -64,7 +64,10 @@ export default {
     const role = interaction.options.getRole("role", true);
     const type = interaction.options.getString("type", true);
 
-    if (!role) return interaction.editReply("Role not found.");
+    if (!role)
+      return interaction.editReply({
+        embeds: [errorEmbed("Role not found.")],
+      });
 
     await Roles.findOneAndUpdate(
       {
