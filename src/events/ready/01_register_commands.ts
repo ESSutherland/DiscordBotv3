@@ -5,7 +5,7 @@ import { areCommandsDifferent } from "../../util/are_commands_different";
 
 export default async (client: Client) => {
   try {
-    let localCommands = await getLocalCommands();
+    let localCommands = await getLocalCommands(["whitelist"]);
     const guild = client.guilds.cache.first();
 
     if (!guild) {
