@@ -54,7 +54,7 @@ export default {
         },
         {
           name: "Episodes",
-          value: anime.episodes.toString() || "N/A",
+          value: anime.episodes ? anime.episodes.toString() : "N/A",
           inline: true,
         },
         {
