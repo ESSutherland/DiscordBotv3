@@ -238,7 +238,7 @@ export class UserCard extends Builder<Props> {
                       backgroundColor: `${role.hexColor}88`,
                       borderColor: role.hexColor,
                     }}
-                    className={`m-0 p-0 text-xl px-3 py-1 rounded-xl min-w-[80px] flex items-center justify-center border-2`}
+                    className={`m-0 p-0 text-lg px-3 py-1 rounded-xl min-w-[70px] flex items-center justify-center border-2`}
                   >
                     {role.name}
                   </p>
