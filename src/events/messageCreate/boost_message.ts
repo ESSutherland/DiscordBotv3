@@ -22,7 +22,7 @@ export default async (client: Client, message: Message) => {
   if (
     devs.find((id) => id === message.author.id) &&
     message.content !== "boost_test" &&
-    message.type === MessageType.Default
+    !boostTypes.find((type) => type === message.type)
   )
     return;
 
