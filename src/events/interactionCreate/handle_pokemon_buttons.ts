@@ -54,13 +54,21 @@ export default async (client: Client, interaction: Interaction) => {
 
   interaction.message.edit({
     embeds: [
-      pokemonData.pages[pokemonData.index].setImage(
-        pokemonData.isShiny
-          ? pokemonData.pokemonData[pokemonData.index].sprites.other?.home
-              .front_shiny || ""
-          : pokemonData.pokemonData[pokemonData.index].sprites.other?.home
-              .front_default || ""
-      ),
+      pokemonData.pages[pokemonData.index]
+        .setImage(
+          pokemonData.isShiny
+            ? pokemonData.pokemonData[pokemonData.index].sprites.other?.home
+                .front_shiny || ""
+            : pokemonData.pokemonData[pokemonData.index].sprites.other?.home
+                .front_default || ""
+        )
+        .setFooter({
+          text: pokemonData.isShiny
+            ? `Form [${pokemonData.index + 1} of ${
+                pokemonData.pages.length
+              }] (✨ Shiny)`
+            : `Form [${pokemonData.index + 1} of ${pokemonData.pages.length}]`,
+        }),
     ],
     components: [
       {
