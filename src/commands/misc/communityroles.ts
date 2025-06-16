@@ -17,6 +17,9 @@ export default {
   permissionsRequired: [PermissionFlagsBits.Administrator],
 
   callback: async (client: Client, interaction: CommandInteraction) => {
+    if (!interaction.guild || !interaction.inGuild() || !interaction.member)
+      return;
+    if (!interaction.isChatInputCommand()) return;
     await interaction.deferReply({ ephemeral: true });
 
     if (!interaction.channel || !interaction.guild) return;

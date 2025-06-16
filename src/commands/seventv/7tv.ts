@@ -97,7 +97,7 @@ const uploadEmote = async (
   name: string,
   animated: boolean,
   size: [number, number]
-) => {
+): Promise<GuildEmoji | undefined> => {
   let emoteData: GuildEmoji | undefined;
 
   const buffer = await sharp(image, { animated })

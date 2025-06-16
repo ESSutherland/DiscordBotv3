@@ -23,6 +23,7 @@ export default {
   },
 
   callback: async (client: Client, interaction: CommandInteraction) => {
+    if (!interaction.isChatInputCommand()) return;
     if (!interaction.guild) return;
 
     await interaction.deferReply();
