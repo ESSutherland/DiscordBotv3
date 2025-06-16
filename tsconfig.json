@@ -10,7 +10,8 @@
       "skipLibCheck": true,
       "strictNullChecks": true,
       "resolveJsonModule": true,
-      "outDir": "dist"
+      "outDir": "dist",
+      "esModuleInterop": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]
