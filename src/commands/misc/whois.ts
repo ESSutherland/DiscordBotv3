@@ -22,27 +22,32 @@ export default {
   },
 
   callback: async (client: Client, interaction: CommandInteraction) => {
+    if (!interaction.isChatInputCommand()) return;
     await interaction.deferReply();
 
     const user = interaction.options.getUser("user") || interaction.user;
     const guild = interaction.guild;
 
+    console.log(guild);
     if (!guild) return;
 
     const member = guild.members.cache.get(user.id);
 
+    console.log(member);
     if (!member) return;
 
-    const roleId = await Roles.findOne({ guildId: guild.id, type: "user" });
+    // const roleId = await Roles.findOne({ guildId: guild.id, type: "user" });
 
-    if (!roleId) return;
+    // console.log(roleId);
+    // if (!roleId) return;
 
-    const defaultRole = guild.roles.cache.get(roleId.roleId);
+    // const defaultRole = guild.roles.cache.get(roleId.roleId);
 
-    if (!defaultRole) return;
+    // console.log(defaultRole);
+    // if (!defaultRole) return;
 
     const specialPermissions = member.permissions.toArray().filter((perm) => {
-      return !defaultRole.permissions.toArray().includes(perm);
+      return !guild.roles.everyone.permissions.toArray().includes(perm);
     });
 
     const embed = new EmbedBuilder()
