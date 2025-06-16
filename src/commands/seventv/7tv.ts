@@ -6,7 +6,7 @@ import {
   GuildEmoji,
   PermissionFlagsBits,
 } from "discord.js";
-import * as sharp from "sharp";
+import sharp from "sharp";
 import { errorEmbed, successEmbed } from "../../util/embed_helper";
 
 export default {
@@ -56,7 +56,7 @@ export default {
 
     try {
       const image = await axios.get(
-        `https://cdn.7tv.app/emote/${emoteId}/1x.webp`,
+        `https://cdn.7tv.app/emote/${emoteId}/4x.webp`,
         { responseType: "arraybuffer" }
       );
       emoteImage = image;
@@ -71,7 +71,7 @@ export default {
       emoteImage.data,
       name,
       animated,
-      [32, 32]
+      animated ? [96, 96] : [128, 128]
     );
 
     if (!emoteData) {
@@ -101,10 +101,16 @@ const uploadEmote = async (
   let emoteData: GuildEmoji | undefined;
 
   const buffer = await sharp(image, { animated })
-    .toFormat(animated ? "gif" : "png")
-    .resize(...size)
-    .toBuffer()
-    .then();
+    .toFormat(animated ? "gif" : "png", {
+      quality: 100,
+      compressionLevel: 9,
+      colours: 128,
+    })
+    .resize(...size, {
+      fit: "contain",
+      withoutEnlargement: true,
+    })
+    .toBuffer();
 
   try {
     emoteData = await interaction.guild?.emojis.create({
@@ -112,7 +118,12 @@ const uploadEmote = async (
       attachment: buffer,
     });
   } catch (error) {
-    uploadEmote(interaction, image, name, true, [size[0] - 2, size[1] - 2]);
+    if (size[0] > 32) {
+      return await uploadEmote(interaction, image, name, animated, [
+        Math.floor(size[0] * 0.8),
+        Math.floor(size[1] * 0.8),
+      ]);
+    }
   }
 
   return emoteData;
