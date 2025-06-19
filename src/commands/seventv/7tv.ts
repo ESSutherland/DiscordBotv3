@@ -105,10 +105,12 @@ const uploadEmote = async (
       quality: 100,
       compressionLevel: 9,
       colours: 128,
+      dither: 0.4,
     })
     .resize(...size, {
-      fit: "contain",
+      fit: "inside",
       withoutEnlargement: true,
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
     })
     .toBuffer();
 
