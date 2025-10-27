@@ -14,22 +14,44 @@ export default async (client: Client, ban: GuildBan) => {
   if (!modChannel || !modChannel.isTextBased()) return;
 
   const { user, guild } = ban;
-  let auditLogPromise = await guild.fetchAuditLogs({
-    type: AuditLogEvent.MemberBanAdd,
-    limit: 1,
-  });
-  const auditLog = auditLogPromise.entries.first();
 
-  if (!auditLog) return;
+  const findBanAuditLog = async (retries = 3, delay = 1000): Promise<any> => {
+    for (let i = 0; i < retries; i++) {
+      const auditLogPromise = await guild.fetchAuditLogs({
+        type: AuditLogEvent.MemberBanAdd,
+        limit: 10,
+      });
 
-  const banGiver = auditLog.executor;
+      const auditLog = auditLogPromise.entries.find(
+        (entry) =>
+          entry.target?.id === user.id &&
+          Date.now() - entry.createdTimestamp < 10000
+      );
+
+      if (auditLog) return auditLog;
+
+      if (i < retries - 1) {
+        await new Promise((resolve) => setTimeout(resolve, delay));
+      }
+    }
+    return null;
+  };
+
+  const auditLog = await findBanAuditLog();
+
+  const banGiver = auditLog?.executor;
+  const reason = auditLog?.reason || "No reason provided";
 
   const banEmbed = new EmbedBuilder()
     .setTitle("User Banned!")
-    .setDescription(`${banGiver?.toString()} banned ${user.username}`)
+    .setDescription(
+      banGiver
+        ? `${banGiver.toString()} banned ${user.username}`
+        : `${user.username} was banned`
+    )
     .addFields({
       name: "Reason",
-      value: auditLog.reason || "No reason provided",
+      value: reason,
     })
     .setAuthor({
       name: `${user.username} (${user.id})`,
