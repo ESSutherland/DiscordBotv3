@@ -71,11 +71,7 @@ export default {
       .setImage(anime.images.jpg.large_image_url || "")
       .setColor(interaction.guild?.members.me?.displayColor || "Blue")
       .setFooter({
-        text: `Aired:  ${dateFormat.format(new Date(anime.aired.from))} ${
-          anime.aired.to
-            ? "- " + dateFormat.format(new Date(anime.aired.to))
-            : ""
-        }`,
+        text: `Aired:  ${anime.aired.string} | Rank: #${anime.rank ?? "N/A"}`,
       });
 
     interaction.editReply({ embeds: [embed] });
