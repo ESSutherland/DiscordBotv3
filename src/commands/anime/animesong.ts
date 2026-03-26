@@ -11,7 +11,7 @@ import { errorEmbed } from "../../util/embed_helper";
 export default {
   data: {
     name: "animesong",
-    description: "Get an anime song",
+    description: "Get an anime song (May not work 100%)",
     options: [
       {
         name: "name",
@@ -71,12 +71,14 @@ export default {
 
     console.log(animeTitle);
 
-    const query = `
+    const searchQuery = `
 query{
     animePagination(search: "%${animeTitle}%", first: 1){ 
       data { 
-	  name 
-	  animethemes(type: ${type}, sequence: ${sequence}, first: 1){
+    name 
+    animethemes(type: ${type}, first: 50){
+      type
+      sequence
       animethemeentries(first : 1){
         videos{
           nodes{
@@ -84,28 +86,83 @@ query{
           }
         }
       }
-	  type
-	  sequence
-	  }
-	  }
+    }
+    }
     }
   }
 `;
 
     try {
-      const res = await axios.post(
+      const resAll = await axios.post(
         "https://graphql.animethemes.moe/",
-        { query },
+        { query: searchQuery },
         { headers: { "Content-Type": "application/json" } },
       );
 
-      let songVideo =
+      const animethemes =
+        resAll.data?.data?.animePagination?.data?.[0]?.animethemes ?? [];
+
+      if (!animethemes || animethemes.length === 0) {
+        return interaction.editReply({
+          embeds: [errorEmbed("No song found with the given parameters.")],
+        });
+      }
+
+      let sequenceToUse: number | null = sequence ?? null;
+
+      if (sequence == null) {
+        if (animethemes.length > 1) {
+          sequenceToUse = 1;
+        } else {
+          sequenceToUse = animethemes[0]?.sequence ?? null;
+        }
+      } else {
+        if (
+          sequence === 1 &&
+          animethemes.length === 1 &&
+          animethemes[0]?.sequence == null
+        ) {
+          sequenceToUse = null;
+        } else {
+          sequenceToUse = sequence;
+        }
+      }
+
+      const sequenceArg =
+        sequenceToUse === null ? "" : `, sequence: ${sequenceToUse}`;
+
+      const finalQuery = `
+query{
+    animePagination(search: "%${animeTitle}%", first: 1){ 
+      data { 
+    name 
+    animethemes(type: ${type}${sequenceArg}, first: 1){
+      animethemeentries(first : 1){
+        videos{
+          nodes{
+            link
+          }
+        }
+      }
+    type
+    sequence
+    }
+    }
+    }
+  }
+`;
+
+      const res = await axios.post(
+        "https://graphql.animethemes.moe/",
+        { query: finalQuery },
+        { headers: { "Content-Type": "application/json" } },
+      );
+
+      const songVideo =
         res.data?.data?.animePagination?.data?.[0]?.animethemes?.[0]
           ?.animethemeentries?.[0]?.videos?.nodes?.[0]?.link ?? null;
 
       if (!songVideo) {
-        songVideo;
-
         return interaction.editReply({
           embeds: [errorEmbed("No song found with the given parameters.")],
         });
@@ -125,8 +182,9 @@ query{
       }
 
       const attachment = new AttachmentBuilder(buffer, { name: fileName });
+      const displaySequence = sequenceToUse === null ? 1 : sequenceToUse;
       await interaction.editReply({
-        content: `${res.data.data.animePagination.data[0].name} - ${type} ${sequence || 1}`,
+        content: `${res.data.data.animePagination.data[0].name} - ${type} ${displaySequence}`,
         files: [attachment],
       });
     } catch (error) {
