@@ -50,7 +50,7 @@ export default {
 
     await interaction.deferReply();
 
-    const title = interaction.options.getString("params", true);
+    const title = interaction.options.getString("name", true);
     const type = interaction.options.getString("type", true);
     const sequence = interaction.options.getInteger("sequence");
 
