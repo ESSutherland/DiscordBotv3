@@ -29,7 +29,7 @@ export default {
     const title = interaction.options.getString("params", true);
 
     const animeData = await axios.get(
-      `https://api.jikan.moe/v4/anime?q=${title}&limit=1`
+      `https://api.jikan.moe/v4/anime?q=${title}&limit=1`,
     );
 
     if (animeData.data.data.length === 0) {
