@@ -168,13 +168,19 @@ query{
         });
       }
 
+      console.log(`Fetching video from ${songVideo}...`);
+
       const videoResp = await axios.get(songVideo, {
         responseType: "arraybuffer",
       });
       const buffer = Buffer.from(videoResp.data);
       const fileName = songVideo.split("/").pop() || "song.webm";
 
-      const MAX_UPLOAD = 60 * 1024 * 1024;
+      console.log(
+        `Fetched video of size ${Math.round(buffer.length / 1024 / 1024)}MB from ${songVideo}`,
+      );
+
+      const MAX_UPLOAD = 50 * 1024 * 1024;
       if (buffer.length > MAX_UPLOAD) {
         return interaction.editReply({
           content: `Video is too large to upload (${Math.round(buffer.length / 1024 / 1024)}MB). Here's the link: ${songVideo}`,
