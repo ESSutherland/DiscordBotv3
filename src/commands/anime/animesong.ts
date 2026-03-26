@@ -14,8 +14,8 @@ export default {
     description: "Get an anime song",
     options: [
       {
-        name: "params",
-        description: "The parameters to search for",
+        name: "name",
+        description: "The anime to search for",
         type: ApplicationCommandOptionType.String,
         required: true,
       },
